@@ -1,2 +1,2 @@
-# cjuggler
+# cjuggler (cj)
 Config Juggler
