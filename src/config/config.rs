@@ -20,14 +20,15 @@ pub struct ConfigFormat {
     pub fields_no: u16,
     pub key_pos: u16,
     pub strip: bool,
+    pub comment: String,
     pub files: Vec<ConfigFile>,
 }
 
 impl fmt::Display for ConfigFormat {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = String::from(format!(
-            "Name: {}\nSeparator: \"{}\"\nNumber of fields: {}\nKey position: {}\nStrip: {}",
-            self.name, self.sep, self.fields_no, self.key_pos, self.strip
+            "Name: {}\nSeparator: \"{}\"\nNumber of fields: {}\nKey position: {}\nStrip: {}\nComment: {}",
+            self.name, self.sep, self.fields_no, self.key_pos, self.strip, self.comment
         ));
 
         for file in self.files.iter() {
@@ -77,9 +78,20 @@ pub fn get_config_with_filename(s: &str) -> Result<Config, Error> {
         let mut config_format = ConfigFormat {
             name: get_string_value(self::STR_NAME, cformat, true, self::STR_EMPTY),
             sep: get_string_value(self::STR_SEPARATOR, cformat, false, self::DEFAULT_SEPARATOR),
-            fields_no: get_int_value(self::STR_FIELDS_NO, cformat, false, 2) as u16,
-            key_pos: get_int_value(self::STR_KEY_POS, cformat, false, 1) as u16,
-            strip: get_bool_value(self::STR_STRIP, cformat, false, false),
+            fields_no: get_int_value(
+                self::STR_FIELDS_NO,
+                cformat,
+                false,
+                self::DEFAULT_FIELDS_NO as u64,
+            ) as u16,
+            key_pos: get_int_value(
+                self::STR_KEY_POS,
+                cformat,
+                false,
+                self::DEFAULT_KEY_POS as u64,
+            ) as u16,
+            strip: get_bool_value(self::STR_STRIP, cformat, false, self::DEFAULT_STRIP),
+            comment: get_string_value(self::STR_COMMENT, cformat, false, self::DEFAULT_COMMENT),
             files: Vec::new(),
         };
         for cfile in cformat[self::STR_FILES].as_array().unwrap() {
@@ -106,6 +118,7 @@ fn get_default_config() -> Result<Config, Error> {
         fields_no: self::DEFAULT_FIELDS_NO as u16,
         key_pos: self::DEFAULT_KEY_POS as u16,
         strip: self::DEFAULT_STRIP,
+        comment: String::from(self::DEFAULT_COMMENT),
         files: Vec::new(),
     };
 
@@ -158,6 +171,7 @@ const STR_FILES: &str = "files";
 const STR_ALIAS: &str = "alias";
 const STR_PATH: &str = "path";
 const STR_EMPTY: &str = "";
+const STR_COMMENT: &str = "comment";
 
 // Default configuration file
 const DEFAULT_CONFIGURATION_PATH: &str = "$HOME/.config/cjuggler/cjuggler.json";
@@ -168,3 +182,4 @@ const DEFAULT_SEPARATOR: &str = "\t";
 const DEFAULT_FIELDS_NO: u8 = 2;
 const DEFAULT_KEY_POS: u8 = 1;
 const DEFAULT_STRIP: bool = false;
+const DEFAULT_COMMENT: &str = "#";

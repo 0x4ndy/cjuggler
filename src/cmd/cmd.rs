@@ -9,6 +9,7 @@ pub struct CmdArgs {
     pub field_no: u16,
     pub key_pos: u16,
     pub strip: bool,
+    pub comment: String,
     is_format_name_set: bool,
     is_file_alias_set: bool,
     is_file_name_set: bool,
@@ -16,6 +17,7 @@ pub struct CmdArgs {
     is_field_no_set: bool,
     is_key_pos_set: bool,
     is_strip_set: bool,
+    is_comment_set: bool,
 }
 
 impl CmdArgs {
@@ -47,6 +49,10 @@ impl CmdArgs {
         self.is_strip_set
     }
 
+    pub fn is_comment_set(&self) -> bool {
+        self.is_comment_set
+    }
+
     pub fn new() -> Result<CmdArgs, Box<dyn Error>> {
         let app = CmdArgs::create_app();
 
@@ -59,7 +65,7 @@ impl CmdArgs {
             is_file_alias_set: matches.is_present("file-alias"),
             file_name: String::from(matches.value_of("file-name").unwrap_or("")),
             is_file_name_set: matches.is_present("file-name"),
-            separator: String::from(matches.value_of("separator").unwrap_or("")),
+            separator: String::from(matches.value_of("separator").unwrap_or("\t")),
             is_separator_set: matches.is_present("separator"),
 
             field_no: matches
@@ -73,6 +79,9 @@ impl CmdArgs {
 
             strip: matches.is_present("strip"),
             is_strip_set: matches.is_present("strip"),
+
+            comment: String::from(matches.value_of("comment").unwrap_or("#")),
+            is_comment_set: matches.is_present("comment"),
         })
     }
 
@@ -144,6 +153,14 @@ impl CmdArgs {
                     .long("strip")
                     .takes_value(false)
                     .help("Indicates that the lines will be stripped out of white spaces."),
+            )
+            .arg(
+                Arg::with_name("comment")
+                    .required(false)
+                    .short("c")
+                    .long("comment")
+                    .takes_value(true)
+                    .help("Field comment used in the processed file."),
             )
     }
 }
