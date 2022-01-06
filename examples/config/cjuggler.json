@@ -6,6 +6,7 @@
 			"fields-no": 2,
 			"key-pos": 1,
 			"strip": false,
+			"comment": "#",
 			"files": [
 				{
 					"alias": "config1",
@@ -19,6 +20,7 @@
 			"fields-no": 3,
 			"key-pos": 1,
 			"strip": false,
+			"comment": "#",
 			"files": [
 				{
 					"alias": "config2",
