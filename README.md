@@ -9,7 +9,7 @@ fields-no - number; number of fields, including the key
 key-pos - number; position of the key field
 strip - true/false; whether it should strip of white spaces at the beginning and end of the line
 
-Config example under examples/config/cjuggler.json
+Config example under ``examples/config/cjuggler.json``
 
 Use:
 
