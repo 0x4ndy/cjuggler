@@ -7,14 +7,14 @@ use cmd::cmd::CmdArgs;
 use config::config::{get_config, Config};
 
 pub fn run() -> Result<(), Box<dyn Error>> {
-    let config: Config = get_config()?;
-    let args = CmdArgs::new()?;
+    let app_config: Config = get_config()?;
+    let app_args = CmdArgs::new()?;
 
-    if !args.is_file_name_set() && !args.is_file_alias_set() {
+    if !app_args.is_file_name_set() && !app_args.is_file_alias_set() {
         CmdArgs::print_help();
         Err("\"file-name\" or \"file-alias\" option required!")?
     }
 
-    println!("{}", config);
+    println!("{}", app_config);
     Ok(())
 }
