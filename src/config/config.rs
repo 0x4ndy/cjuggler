@@ -1,7 +1,8 @@
 use serde_json::Value;
 use std::fmt;
 use std::fs;
-use std::io::Error;
+//use std::io::Error;
+use std::error::Error;
 
 pub struct ConfigFile {
     pub alias: String,
@@ -54,19 +55,20 @@ impl fmt::Display for Config {
     }
 }
 
-pub fn get_config() -> Result<Config, Error> {
+pub fn get_config() -> Result<Config, Box<dyn Error>> {
     match get_config_with_filename(self::DEFAULT_CONFIGURATION_PATH) {
         Ok(config) => Ok(config),
         Err(_) => self::get_default_config(),
     }
 }
 
-pub fn get_config_with_filename(s: &str) -> Result<Config, Error> {
-    let config_str = fs::read_to_string(String::from(s));
-    let config_str = match config_str {
-        Ok(value) => value,
-        Err(e) => return Err(e),
-    };
+pub fn get_config_with_filename(s: &str) -> Result<Config, Box<dyn Error>> {
+    let config_str = fs::read_to_string(String::from(s))?;
+    //let config_str = fs::read_to_string(String::from(s));
+    //let config_str = match config_str {
+    //    Ok(value) => value,
+    //    Err(e) => return Err(""),
+    //};
 
     let json_config: Value = serde_json::from_str(config_str.as_str())?;
 
@@ -107,7 +109,7 @@ pub fn get_config_with_filename(s: &str) -> Result<Config, Error> {
     Ok(config)
 }
 
-fn get_default_config() -> Result<Config, Error> {
+fn get_default_config() -> Result<Config, Box<dyn Error>> {
     let mut config = Config {
         formats: Vec::new(),
     };

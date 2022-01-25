@@ -11,7 +11,6 @@ pub fn run() -> Result<(), Box<dyn Error>> {
     let app_args = CmdArgs::new()?;
 
     if !app_args.is_file_name_set() && !app_args.is_file_alias_set() {
-        CmdArgs::print_help();
         Err("\"file-name\" or \"file-alias\" option required!")?
     }
 
