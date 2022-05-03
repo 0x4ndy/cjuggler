@@ -13,7 +13,7 @@ Config example under ``examples/config/cjuggler.json``
 
 Use:
 ```
-cj -n \<format-name\> -a \<file-alias\> 
-cj -n \<format-name\> -f \<file-name\>
-cj -d \<separator\> -i \<fields-no\> -k \<key-pos\> -s \<strip\> -c \<comment\>
+cj -n <format_name> -a <file_alias> 
+cj -n <format_name> -f <file_name>
+cj -d <separator> -i <fields_no> -k <key_pos> -s <strip> -c <comment>
 ```
