@@ -5,8 +5,8 @@ Parameters:
 ```
 name - string; name of the predefined configuration
 sep - string; indicates how fields are separated, e.g. "\t"
-fields-no - number; number of fields, including the key
-key-pos - number; position of the key field
+fields_no - number; number of fields, including the key
+key_pos - number; position of the key field
 strip - true/false; whether it should strip of white spaces at the beginning and end of the line
 ```
 Config example under ``examples/config/cjuggler.json``
