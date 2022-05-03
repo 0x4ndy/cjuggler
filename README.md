@@ -14,8 +14,6 @@ Config example under ``examples/config/cjuggler.json``
 Use:
 ```
 cj -n \<format-name\> -a \<file-alias\> 
-
 cj -n \<format-name\> -f \<file-name\>
-
 cj -d \<separator\> -i \<fields-no\> -k \<key-pos\> -s \<strip\> -c \<comment\>
 ```
