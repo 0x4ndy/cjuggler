@@ -59,23 +59,23 @@ impl CmdArgs {
         let matches = app.get_matches();
 
         Ok(CmdArgs {
-            format_name: String::from(matches.value_of("format-name").unwrap_or("")),
-            is_format_name_set: matches.is_present("format-name"),
-            file_alias: String::from(matches.value_of("file-alias").unwrap_or("")),
-            is_file_alias_set: matches.is_present("file-alias"),
-            file_name: String::from(matches.value_of("file-name").unwrap_or("")),
-            is_file_name_set: matches.is_present("file-name"),
+            format_name: String::from(matches.value_of("format_name").unwrap_or("")),
+            is_format_name_set: matches.is_present("format_name"),
+            file_alias: String::from(matches.value_of("file_alias").unwrap_or("")),
+            is_file_alias_set: matches.is_present("file_alias"),
+            file_name: String::from(matches.value_of("file_name").unwrap_or("")),
+            is_file_name_set: matches.is_present("file_name"),
             separator: String::from(matches.value_of("separator").unwrap_or("\t")),
             is_separator_set: matches.is_present("separator"),
 
             field_no: matches
-                .value_of("fields-no")
+                .value_of("fields_no")
                 .unwrap_or("2")
                 .parse::<u16>()?,
-            is_field_no_set: matches.is_present("fields-no"),
+            is_field_no_set: matches.is_present("fields_no"),
 
-            key_pos: matches.value_of("key-pos").unwrap_or("1").parse::<u16>()?,
-            is_key_pos_set: matches.is_present("key-pos"),
+            key_pos: matches.value_of("key_pos").unwrap_or("1").parse::<u16>()?,
+            is_key_pos_set: matches.is_present("key_pos"),
 
             strip: matches.is_present("strip"),
             is_strip_set: matches.is_present("strip"),
@@ -99,7 +99,7 @@ impl CmdArgs {
             .author(authors)
             .about("https://github.com/0x4ndy/cjuggler")
             .arg(
-                Arg::with_name("format-name")
+                Arg::with_name("format_name")
                     .required(false)
                     .short("n")
                     .long("format")
@@ -107,7 +107,7 @@ impl CmdArgs {
                     .help("Format name defined in the configuration file."),
             )
             .arg(
-                Arg::with_name("file-alias")
+                Arg::with_name("file_alias")
                     .required(false)
                     .short("a")
                     .long("alias")
@@ -115,7 +115,7 @@ impl CmdArgs {
                     .help("File alias defined in the configuration file."),
             )
             .arg(
-                Arg::with_name("file-name")
+                Arg::with_name("file_name")
                     .required(false)
                     .short("f")
                     .long("file")
@@ -131,18 +131,18 @@ impl CmdArgs {
                     .help("Field separator/delimiter used in the processed file."),
             )
             .arg(
-                Arg::with_name("fields-no")
+                Arg::with_name("fields_no")
                     .required(false)
                     .short("i")
-                    .long("field-no")
+                    .long("field_no")
                     .takes_value(true)
                     .help("Number of fields in the processed file."),
             )
             .arg(
-                Arg::with_name("key-pos")
+                Arg::with_name("key_pos")
                     .required(false)
                     .short("k")
-                    .long("key-pos")
+                    .long("key_pos")
                     .takes_value(true)
                     .help("Position of the key field."),
             )

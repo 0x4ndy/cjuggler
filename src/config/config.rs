@@ -166,8 +166,8 @@ fn get_bool_value(key: &str, value: &Value, required: bool, default: bool) -> bo
 const STR_FORMATS: &str = "formats";
 const STR_NAME: &str = "name";
 const STR_SEPARATOR: &str = "sep";
-const STR_FIELDS_NO: &str = "fields-no";
-const STR_KEY_POS: &str = "key-pos";
+const STR_FIELDS_NO: &str = "fields_no";
+const STR_KEY_POS: &str = "key_pos";
 const STR_STRIP: &str = "strip";
 const STR_FILES: &str = "files";
 const STR_ALIAS: &str = "alias";
@@ -179,7 +179,7 @@ const STR_COMMENT: &str = "comment";
 const DEFAULT_CONFIGURATION_PATH: &str = "$HOME/.config/cjuggler/cjuggler.json";
 
 // Default values of the config
-const DEFAULT_FORMAT_NAME: &str = "key-value";
+const DEFAULT_FORMAT_NAME: &str = "key_value";
 const DEFAULT_SEPARATOR: &str = "\t";
 const DEFAULT_FIELDS_NO: u8 = 2;
 const DEFAULT_KEY_POS: u8 = 1;
