@@ -3,8 +3,8 @@ mod config;
 
 use std::error::Error;
 
-use cmd::cmd::CmdArgs;
-use config::config::{get_config, Config};
+use cmd::CmdArgs;
+use config::{get_config, Config};
 
 pub fn run() -> Result<(), Box<dyn Error>> {
     let app_config: Config = get_config()?;
