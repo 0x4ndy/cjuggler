@@ -1,5 +1,6 @@
 mod cmd;
 mod config;
+mod processor;
 
 use std::error::Error;
 
@@ -14,6 +15,5 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         Err("\"file_name\" or \"file_alias\" option required!")?
     }
 
-    println!("{}", app_config);
-    Ok(())
+    processor::process(app_args, app_config)
 }
