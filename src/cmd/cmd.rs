@@ -135,7 +135,7 @@ impl CmdArgs {
                 Arg::with_name("fields_no")
                     .required(false)
                     .short("i")
-                    .long("field_no")
+                    .long("field-no")
                     .takes_value(true)
                     .help("Number of fields in the processed file."),
             )
@@ -143,7 +143,7 @@ impl CmdArgs {
                 Arg::with_name("key_pos")
                     .required(false)
                     .short("k")
-                    .long("key_pos")
+                    .long("key-pos")
                     .takes_value(true)
                     .help("Position of the key field."),
             )
@@ -151,7 +151,7 @@ impl CmdArgs {
                 Arg::with_name("value_pos")
                     .required(false)
                     .short("v")
-                    .long("value_pos")
+                    .long("value-pos")
                     .takes_value(true)
                     .help("Position of the value field."),
             )
