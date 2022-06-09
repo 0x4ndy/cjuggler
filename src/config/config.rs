@@ -17,8 +17,9 @@ impl fmt::Display for ConfigFile {
 pub struct ConfigFormat {
     pub name: String,
     pub sep: String,
-    pub fields_no: u16,
-    pub key_pos: u16,
+    pub fields_no: u8,
+    pub key_pos: u8,
+    pub value_pos: u8,
     pub strip: bool,
     pub comment: String,
     pub files: Vec<ConfigFile>,
@@ -27,8 +28,14 @@ pub struct ConfigFormat {
 impl fmt::Display for ConfigFormat {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = String::from(format!(
-            "Name: {}\nSeparator: \"{}\"\nNumber of fields: {}\nKey position: {}\nStrip: {}\nComment: {}",
-            self.name, self.sep, self.fields_no, self.key_pos, self.strip, self.comment
+            "Name: {}\nSeparator: \"{}\"\nNumber of fields: {}\nKey position: {}\nValue position: {}\nStrip: {}\nComment: {}",
+            self.name, 
+            self.sep, 
+            self.fields_no, 
+            self.key_pos, 
+            self.value_pos, 
+            self.strip, 
+            self.comment
         ));
 
         for file in self.files.iter() {
@@ -78,14 +85,20 @@ pub fn get_config_with_filename(s: &str) -> Result<Config, Box<dyn Error>> {
                 self::STR_FIELDS_NO,
                 cformat,
                 false,
-                self::DEFAULT_FIELDS_NO as u64,
-            ) as u16,
+                self::DEFAULT_FIELDS_NO,
+            ) as u8,
             key_pos: get_int_value(
                 self::STR_KEY_POS,
                 cformat,
                 false,
-                self::DEFAULT_KEY_POS as u64,
-            ) as u16,
+                self::DEFAULT_KEY_POS,
+            ) as u8,
+            value_pos: get_int_value(
+                self::STR_VALUE_POS,
+                cformat,
+                false,
+                self::DEFAULT_VALUE_POS,
+            ) as u8,
             strip: get_bool_value(self::STR_STRIP, cformat, false, self::DEFAULT_STRIP),
             comment: get_string_value(self::STR_COMMENT, cformat, false, self::DEFAULT_COMMENT),
             files: Vec::new(),
@@ -111,8 +124,9 @@ fn get_default_config() -> Result<Config, Box<dyn Error>> {
     let config_format = ConfigFormat {
         name: String::from(self::DEFAULT_FORMAT_NAME),
         sep: String::from(self::DEFAULT_SEPARATOR),
-        fields_no: self::DEFAULT_FIELDS_NO as u16,
-        key_pos: self::DEFAULT_KEY_POS as u16,
+        fields_no: self::DEFAULT_FIELDS_NO,
+        key_pos: self::DEFAULT_KEY_POS,
+        value_pos: self::DEFAULT_VALUE_POS,
         strip: self::DEFAULT_STRIP,
         comment: String::from(self::DEFAULT_COMMENT),
         files: Vec::new(),
@@ -123,7 +137,7 @@ fn get_default_config() -> Result<Config, Box<dyn Error>> {
     Ok(config)
 }
 
-fn get_int_value(key: &str, value: &Value, required: bool, default: u64) -> u64 {
+fn get_int_value(key: &str, value: &Value, required: bool, default: u8) -> u8 {
     if required && !value[key].is_u64() {
         panic!(
             "Field \"{}\" has an incorrect value. Expected: unsigned integer.",
@@ -131,7 +145,7 @@ fn get_int_value(key: &str, value: &Value, required: bool, default: u64) -> u64 
         );
     }
 
-    value[key].as_u64().unwrap_or(default as u64)
+    value[key].as_u64().unwrap_or(default as u64) as u8
 }
 
 fn get_string_value(key: &str, value: &Value, required: bool, default: &str) -> String {
@@ -162,6 +176,7 @@ const STR_NAME: &str = "name";
 const STR_SEPARATOR: &str = "sep";
 const STR_FIELDS_NO: &str = "fields_no";
 const STR_KEY_POS: &str = "key_pos";
+const STR_VALUE_POS: &str = "value_pos";
 const STR_STRIP: &str = "strip";
 const STR_FILES: &str = "files";
 const STR_ALIAS: &str = "alias";
@@ -177,5 +192,6 @@ const DEFAULT_FORMAT_NAME: &str = "key_value";
 const DEFAULT_SEPARATOR: &str = "\t";
 const DEFAULT_FIELDS_NO: u8 = 2;
 const DEFAULT_KEY_POS: u8 = 1;
+const DEFAULT_VALUE_POS: u8 = 2;
 const DEFAULT_STRIP: bool = false;
 const DEFAULT_COMMENT: &str = "#";
