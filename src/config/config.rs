@@ -1,4 +1,5 @@
 use serde_json::Value;
+use dirs::home_dir;
 use std::error::Error;
 use std::fmt;
 use std::fs;
@@ -62,7 +63,7 @@ impl fmt::Display for Config {
 }
 
 pub fn get_config() -> Result<Config, Box<dyn Error>> {
-    match get_config_with_filename(self::DEFAULT_CONFIGURATION_PATH) {
+    match get_config_with_filename(self::get_default_configuration_path().as_str()) {
         Ok(config) => Ok(config),
         Err(_) => self::get_default_config(),
     }
@@ -170,6 +171,12 @@ fn get_bool_value(key: &str, value: &Value, required: bool, default: bool) -> bo
     value[key].as_bool().unwrap_or(default)
 }
 
+fn get_default_configuration_path() -> String {
+    let path = format!("{}/{}", home_dir().unwrap().to_str().unwrap(), DEFAULT_CONFIGURATION_PATH);
+    println!("{}", path);
+    path
+}
+
 // Default string representation related to the configuration
 const STR_FORMATS: &str = "formats";
 const STR_NAME: &str = "name";
@@ -185,7 +192,7 @@ const STR_EMPTY: &str = "";
 const STR_COMMENT: &str = "comment";
 
 // Default configuration file
-const DEFAULT_CONFIGURATION_PATH: &str = "$HOME/.config/cjuggler/cjuggler.json";
+const DEFAULT_CONFIGURATION_PATH: &str = ".config/cjuggler/cjuggler.json";
 
 // Default values of the config
 const DEFAULT_FORMAT_NAME: &str = "key_value";
