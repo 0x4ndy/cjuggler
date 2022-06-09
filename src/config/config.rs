@@ -1,8 +1,7 @@
 use serde_json::Value;
+use std::error::Error;
 use std::fmt;
 use std::fs;
-//use std::io::Error;
-use std::error::Error;
 
 pub struct ConfigFile {
     pub alias: String,
@@ -64,11 +63,6 @@ pub fn get_config() -> Result<Config, Box<dyn Error>> {
 
 pub fn get_config_with_filename(s: &str) -> Result<Config, Box<dyn Error>> {
     let config_str = fs::read_to_string(String::from(s))?;
-    //let config_str = fs::read_to_string(String::from(s));
-    //let config_str = match config_str {
-    //    Ok(value) => value,
-    //    Err(e) => return Err(""),
-    //};
 
     let json_config: Value = serde_json::from_str(config_str.as_str())?;
 
