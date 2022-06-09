@@ -5,6 +5,7 @@
 			"sep": "\t",
 			"fields-no": 2,
 			"key-pos": 1,
+			"value-pos": 2,
 			"strip": false,
 			"comment": "#",
 			"files": [
@@ -19,6 +20,7 @@
 			"sep": "\t",
 			"fields-no": 3,
 			"key-pos": 1,
+			"value-pos": 2,
 			"strip": false,
 			"comment": "#",
 			"files": [

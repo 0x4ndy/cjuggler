@@ -6,8 +6,9 @@ pub struct CmdArgs {
     pub file_alias: String,
     pub file_name: String,
     pub separator: String,
-    pub field_no: u16,
-    pub key_pos: u16,
+    pub field_no: u8,
+    pub key_pos: u8,
+    pub value_pos: u8,
     pub strip: bool,
     pub comment: String,
     is_format_name_set: bool,
@@ -16,6 +17,7 @@ pub struct CmdArgs {
     is_separator_set: bool,
     is_field_no_set: bool,
     is_key_pos_set: bool,
+    is_value_pos_set: bool,
     is_strip_set: bool,
     is_comment_set: bool,
 }
@@ -45,6 +47,10 @@ impl CmdArgs {
         self.is_key_pos_set
     }
 
+    pub fn is_value_pos_set(&self) -> bool {
+        self.is_value_pos_set
+    }
+
     pub fn is_strip_set(&self) -> bool {
         self.is_strip_set
     }
@@ -67,19 +73,14 @@ impl CmdArgs {
             is_file_name_set: matches.is_present("file_name"),
             separator: String::from(matches.value_of("separator").unwrap_or("\t")),
             is_separator_set: matches.is_present("separator"),
-
-            field_no: matches
-                .value_of("fields_no")
-                .unwrap_or("2")
-                .parse::<u16>()?,
+            field_no: matches.value_of("fields_no").unwrap_or("2").parse::<u8>()?,
             is_field_no_set: matches.is_present("fields_no"),
-
-            key_pos: matches.value_of("key_pos").unwrap_or("1").parse::<u16>()?,
+            key_pos: matches.value_of("key_pos").unwrap_or("1").parse::<u8>()?,
             is_key_pos_set: matches.is_present("key_pos"),
-
+            value_pos: matches.value_of("value_pos").unwrap_or("2").parse::<u8>()?,
+            is_value_pos_set: matches.is_present("value_pos"),
             strip: matches.is_present("strip"),
             is_strip_set: matches.is_present("strip"),
-
             comment: String::from(matches.value_of("comment").unwrap_or("#")),
             is_comment_set: matches.is_present("comment"),
         })
@@ -145,6 +146,14 @@ impl CmdArgs {
                     .long("key_pos")
                     .takes_value(true)
                     .help("Position of the key field."),
+            )
+            .arg(
+                Arg::with_name("value_pos")
+                    .required(false)
+                    .short("v")
+                    .long("value_pos")
+                    .takes_value(true)
+                    .help("Position of the value field."),
             )
             .arg(
                 Arg::with_name("strip")
